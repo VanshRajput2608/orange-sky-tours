@@ -1,0 +1,78 @@
+<!-- File: src/main/resources/templates/index.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Orange Sky Tours</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="banner">
+            <h1>Orange Sky Tours</h1>
+            <p>Explore India and the World with Us</p>
+        </div>
+    </header>
+
+    <section class="search-bar">
+        <input type="text" placeholder="Search destinations..." id="searchInput" onkeyup="filterTours()">
+    </section>
+
+    <main class="tour-grid" id="tourGrid">
+        <!-- Each tour card -->
+        <div th:each="tour : ${tours}" class="tour-card">
+            <img th:src="@{'/images/' + ${tour.image}}" alt="Tour Image">
+            <div class="tour-info">
+                <h2 th:text="${tour.name}"></h2>
+                <p th:text="${tour.days} + ' Days / ' + ${tour.nights} + ' Nights'"></p>
+                <p class="price" th:text="'₹' + ${tour.price}"></p>
+                <button onclick="alert('Booking feature coming soon!')">Book Now</button>
+            </div>
+        </div>
+    </main>
+    
+    <section id="contact" class="contact-section">
+	    <div class="contact-container">
+	        <h2>Contact <span>Orange Sky Tours</span></h2>
+	        <p>We’d love to hear from you. Send us a message and we’ll get in touch as soon as possible!</p>
+	        <form action="/submitContact" method="post" class="contact-form">
+	            <div class="form-group">
+	                <input type="text" name="name" id="name" required placeholder=" " />
+	                <label for="name">Full Name</label>
+	            </div>
+	            <div class="form-group">
+	                <input type="email" name="email" id="email" required placeholder=" " />
+	                <label for="email">Email Address</label>
+	            </div>
+	            <div class="form-group">
+	                <input type="text" name="phone" id="phone" required placeholder=" " />
+	                <label for="phone">Phone Number</label>
+	            </div>
+	            <div class="form-group">
+	                <textarea name="message" id="message" rows="5" required placeholder=" "></textarea>
+	                <label for="message">Your Message</label>
+	            </div>
+	            <button type="submit" class="btn-submit">Send Message</button>
+	        </form>
+	    </div>
+	</section>
+
+    <footer>
+        <p>Contact us: vansh.rajput2608@gmail.com | 7013162767</p>
+    </footer>
+
+    <script>
+        function filterTours() {
+            var input = document.getElementById("searchInput");
+            var filter = input.value.toLowerCase();
+            var cards = document.querySelectorAll(".tour-card");
+
+            cards.forEach(card => {
+                var name = card.querySelector("h2").textContent.toLowerCase();
+                card.style.display = name.includes(filter) ? "block" : "none";
+            });
+        }
+    </script>
+</body>
+</html>
