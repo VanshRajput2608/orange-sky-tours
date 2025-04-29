@@ -4,9 +4,9 @@ FROM maven:3.8.1-openjdk-17 AS build
 # Set the working directory
 WORKDIR /app
 
-# Copy the pom.xml and the source code into the container
-COPY pom.xml .
-COPY src ./src
+# Copy pom.xml and source code into the container
+COPY ./pom.xml /app/pom.xml
+COPY ./src/main /app/src/main
 
 # Run Maven to build the application
 RUN mvn clean package -DskipTests
@@ -17,7 +17,7 @@ FROM openjdk:17-jdk-slim
 # Set the working directory
 WORKDIR /app
 
-# Copy the jar file from the build stage
+# Copy the JAR file from the build stage
 COPY --from=build /app/target/*.jar /app/app.jar
 
 # Run the application
