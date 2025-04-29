@@ -4,9 +4,9 @@ FROM maven:3.8.1-openjdk-17 AS build
 # Set the working directory
 WORKDIR /app
 
-# Copy pom.xml and source code into the container
-COPY ./pom.xml /app/pom.xml
-COPY ./src/main /app/src/main
+# Copy the pom.xml and the source code into the container
+COPY pom.xml /app/pom.xml
+COPY src /app/src
 
 # Run Maven to build the application
 RUN mvn clean package -DskipTests
